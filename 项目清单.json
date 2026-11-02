@@ -4,7 +4,7 @@
   "worldId": "11321072913154",
   "编辑器版本": "1.0.92",
   "文件数": 19,
-  "总体积": 6471184,
+  "总体积": 6471121,
   "说明": "改动资产后必须运行 python tools/world.py verify --update-manifest 刷新本清单；world-config.json 中的 quickPreview（原作者快速预览二维码）已移除。",
   "文件": [
     {
@@ -89,8 +89,8 @@
     },
     {
       "path": "安装-Mac.command",
-      "size": 2112,
-      "sha256": "8a7567fac4bbd34cbf0b112d13b6ec1cf59205d7ed67d2f50bce700574cc6a27"
+      "size": 2049,
+      "sha256": "a4a67d711f02890944a5e735130513b325c4e7e8c177410c206be6077d7fe6cd"
     },
     {
       "path": "安装-Windows.bat",
