@@ -289,6 +289,7 @@ def cmd_verify(args) -> int:
         # 所以即使存在 drift 也照常重建，只把 drift 打印出来供人核对。
         if problems:
             warn(f"检测到 {len(problems)} 处与旧清单不一致，已按当前文件重建清单（请确认这些改动是有意的）")
+        normalize_newlines(repo)
         write_manifest(repo, manifest)
         ok(f"已刷新 {MANIFEST_NAME}（{len(read_manifest(repo).get('文件', []))} 条）")
         return 0
@@ -301,8 +302,6 @@ def cmd_verify(args) -> int:
 def write_manifest(repo: Path, old: dict) -> None:
     files = []
     for rel in collect_files(repo):
-        if rel == MANIFEST_NAME:
-            continue
         f = repo / rel
         files.append({
             "path": rel,
@@ -324,6 +323,58 @@ def write_manifest(repo: Path, old: dict) -> None:
     p = repo / MANIFEST_NAME
     with open(p, "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+
+
+# ---------------------------------------------------------------- 换行符归一
+
+TEXT_LF_EXT = {".json", ".md", ".py", ".lua", ".txt", ".yml", ".yaml", ".command", ".sh"}
+TEXT_CRLF_EXT = {".ps1", ".bat", ".cmd"}
+TEXT_NO_EXT = {"LICENSE", "NOTICE", "AUTHORS"}
+BINARY_EXT = {".data", ".png", ".jpg", ".jpeg", ".zip"}
+
+
+def normalize_newlines(repo: Path, quiet: bool = False) -> list:
+    """
+    按 .gitattributes 的约定统一换行符：
+      文本 → LF（.ps1/.bat/.cmd 例外，保持 CRLF）
+      二进制 → 不碰
+    为什么必须做：git 提交时会按 .gitattributes 规范化换行，
+    而清单是按工作区文件算哈希的。Windows 上若工作区是 CRLF、仓库里是 LF，
+    CI 一 clone 就会报 sha256 不一致。这里提前对齐，省掉这类假失败。
+    """
+    changed = []
+    for rel in collect_files(repo):
+        p = repo / rel
+        ext = p.suffix.lower()
+        name = p.name
+        if ext in BINARY_EXT:
+            continue
+        if ext in TEXT_LF_EXT or (not ext and name in TEXT_NO_EXT):
+            target = b"\n"
+        elif ext in TEXT_CRLF_EXT:
+            target = b"\r\n"
+        else:
+            continue
+        raw = p.read_bytes()
+        if b"\x00" in raw[:4096]:      # 保险：看着像二进制就别动
+            continue
+        unified = raw.replace(b"\r\n", b"\n")
+        if target == b"\r\n":
+            unified = unified.replace(b"\n", b"\r\n")
+        if unified != raw:
+            p.write_bytes(unified)
+            changed.append(rel)
+    if changed and not quiet:
+        info(f"已统一 {len(changed)} 个文件的换行符：" + "、".join(changed))
+    return changed
+
+
+def cmd_normalize(args) -> int:
+    repo = Path(args.repo).resolve()
+    changed = normalize_newlines(repo)
+    if not changed:
+        ok("所有文本文件换行符已符合 .gitattributes，无需改动。")
+    return 0
 
 
 # ---------------------------------------------------------------- install / link / sync
@@ -469,6 +520,9 @@ def main() -> int:
     s = sub.add_parser("sync", parents=[shared], help="把仓库工程覆盖到已登记路径")
     s.add_argument("--dest", help="手动指定目标工程路径")
     s.set_defaults(func=cmd_sync)
+
+    n = sub.add_parser("normalize", help="按 .gitattributes 统一换行符（Windows 上改完文件跑一次）")
+    n.set_defaults(func=cmd_normalize)
 
     args = ap.parse_args()
     return args.func(args)
