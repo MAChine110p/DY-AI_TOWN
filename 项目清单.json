@@ -1,0 +1,106 @@
+{
+  "包名": "造世界-主世界地图-糖果童趣小镇-20261102",
+  "工程": "project_vqo1bvzh",
+  "worldId": "11321072913154",
+  "编辑器版本": "1.0.92",
+  "文件数": 19,
+  "总体积": 6471184,
+  "说明": "改动资产后必须运行 python tools/world.py verify --update-manifest 刷新本清单；world-config.json 中的 quickPreview（原作者快速预览二维码）已移除。",
+  "文件": [
+    {
+      "path": "AGENTS.md",
+      "size": 5256,
+      "sha256": "a015ff6e8432dd4e175726462d2c6b63e544da8913551765ba2c22d97d107a61"
+    },
+    {
+      "path": "LICENSE",
+      "size": 11558,
+      "sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6"
+    },
+    {
+      "path": "README.md",
+      "size": 4677,
+      "sha256": "bfd75fab47dc04598c0a144b66e1ee9470803192067cfbd791efdddb0ec69985"
+    },
+    {
+      "path": "docs/同步与协作规范.md",
+      "size": 5617,
+      "sha256": "167a6f08570f5db53e80c9cf891d701b2c38528f0486c6273c9c88927322c3eb"
+    },
+    {
+      "path": "docs/工程文件说明.md",
+      "size": 4596,
+      "sha256": "52ed441ab9d65c6b4a16b52d903ed932f753051fb0dada2aa01295e94d4c9d23"
+    },
+    {
+      "path": "projects/project_vqo1bvzh/project.json",
+      "size": 149,
+      "sha256": "ff53e3b9a5fbe7fa64e591cf7dc8e5804eee9995537b90598b3d3ee0c8609f87"
+    },
+    {
+      "path": "projects/project_vqo1bvzh/scene.data",
+      "size": 6082576,
+      "sha256": "94ac5fdf745dadb9e9d4c9aa95bbedf5bd121458227941e1bfca5428521a853d"
+    },
+    {
+      "path": "projects/project_vqo1bvzh/scripts/client/index.lua",
+      "size": 44,
+      "sha256": "884416de229f12fe8abbef19d356fd0bbab447ee7b6208d63c63a5fd87ea11b7"
+    },
+    {
+      "path": "projects/project_vqo1bvzh/settings/env-param-overrides.json",
+      "size": 150,
+      "sha256": "2fcfa0f156f78106d55e367dbb63703996ee937d0719ad4b364b737387f80759"
+    },
+    {
+      "path": "projects/project_vqo1bvzh/world-config.json",
+      "size": 58,
+      "sha256": "0a18d7efb52730996e75d253c6206038be316502563d20351e6a379378a93f75"
+    },
+    {
+      "path": "tools/install-windows.ps1",
+      "size": 3088,
+      "sha256": "af233b7d22144034ae92eae1e6510bafbecb5c2c09cc12e3a237edbb2c3818f8"
+    },
+    {
+      "path": "tools/update-projects.js",
+      "size": 1535,
+      "sha256": "f00eb899d828f972edb9440ef211963308ab6ce5d67c51a1c565d475e59169c7"
+    },
+    {
+      "path": "tools/world.py",
+      "size": 17410,
+      "sha256": "0e131136390eef6766e8670d0cdcfd952c26c28ecfe8e08559c246105f2d86af"
+    },
+    {
+      "path": "先读我-安装说明.md",
+      "size": 4199,
+      "sha256": "a194453b3666758d9f1affa7e6192d8a491ffcb194c92ae91e939a4d87214e6b"
+    },
+    {
+      "path": "地图信息.md",
+      "size": 2467,
+      "sha256": "75cc692434f76b93136f577a66824f3057e404051d5e4f6ef9200a613eb1cc11"
+    },
+    {
+      "path": "地图提示词.md",
+      "size": 4130,
+      "sha256": "97271365f7177622c5977a9c42d1fe64763f1404d9e87cf229db6f1765781122"
+    },
+    {
+      "path": "安装-Mac.command",
+      "size": 2112,
+      "sha256": "8a7567fac4bbd34cbf0b112d13b6ec1cf59205d7ed67d2f50bce700574cc6a27"
+    },
+    {
+      "path": "安装-Windows.bat",
+      "size": 114,
+      "sha256": "7b1aa59728a8027b63f5256f7965da2970cf915b3d69ca550311782a33e2383f"
+    },
+    {
+      "path": "预览-俯视图.jpg",
+      "size": 321448,
+      "sha256": "a124534f669472ec0f62a4ef3dfe15003dbe6109e15737ba3d0afc94510fde5f"
+    }
+  ]
+}

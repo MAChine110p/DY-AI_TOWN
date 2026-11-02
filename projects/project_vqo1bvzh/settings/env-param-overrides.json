@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "selected": {
+    "scope": "official",
+    "templateId": "env_sun"
+  },
+  "overrides": {
+    "official": {},
+    "user": {}
+  }
+}

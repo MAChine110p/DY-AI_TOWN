@@ -1,0 +1,22 @@
+# 统一换行，避免 Windows / macOS 互相污染
+* text=auto eol=lf
+
+# 二进制：绝不允许任何换行符转换，否则文件直接损坏
+*.data   binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.zip    binary
+
+# 脚本按平台保留原始换行
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+*.ps1     text eol=crlf
+*.command text eol=lf
+*.sh      text eol=lf
+
+# 中文文件名不做转义，git status / diff 里显示原文
+*.md     text
+*.json   text
+*.lua    text
+*.py     text

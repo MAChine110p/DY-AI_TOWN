@@ -1,0 +1,42 @@
+name: verify-assets
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 校验资产哈希与结构（项目清单.json）
+        run: |
+          set -o pipefail
+          python tools/world.py verify --json | tee verify-report.json
+
+      - name: 检查是否混入不该提交的文件
+        if: always()
+        run: |
+          echo "== 黑名单扫描 =="
+          fail=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            echo "::error file=$f::该文件不允许进入仓库（见 AGENTS.md 第 2 节）"
+            fail=1
+          done < <(git ls-files | grep -E '(^|/)(projects\.json|\.creator/|ai-asset-generate-config\.json|ai-pcg-generate-config\.json|ai-topology-generate-config\.json)|\.bak(-|$)|(^|/)shot\.' || true)
+          exit $fail
+
+      - name: 写汇总
+        if: always()
+        run: |
+          echo "### 校验结果" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat verify-report.json 2>/dev/null >> "$GITHUB_STEP_SUMMARY" || echo '{"ok": false, "note": "verify 未生成报告"}' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

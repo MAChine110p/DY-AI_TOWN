@@ -1,0 +1,23 @@
+# 编辑器运行时产物（打开工程时自动生成，不属于资产）
+.creator/
+ai-asset-generate-config.json
+ai-pcg-generate-config.json
+ai-topology-generate-config.json
+
+# 安装 / 同步过程的备份
+*.bak-*
+*.bak
+
+# 本地临时文件
+shot.*
+*.tmp
+*.log
+
+# 含本机账号 uid，绝不能提交
+projects.json
+projects.json.bak-*
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
+desktop.ini
